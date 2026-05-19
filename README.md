@@ -23,7 +23,7 @@ Start QEMU in debug mode:
 make qemu
 ```
 
-![alt text](docs/qemu.png)
+![alt text](qemu.png)
 
 ### Connect GDB
 
@@ -36,4 +36,4 @@ Then run the program step-by-step by using `s` command and finally see the state
 ```
 info registers
 ```
-![alt text](docs/gdb.png)
+![alt text](gdb.png)
