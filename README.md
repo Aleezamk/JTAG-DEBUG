@@ -32,7 +32,7 @@ Open a new terminal and start GDB:
 make gdb
 ```
 
-Then run the program step-by-step by using `s` command and finally see the state of registers
+Then run the program step-by-step by using **`s`** command and finally see the state of registers
 ```
 info registers
 ```
