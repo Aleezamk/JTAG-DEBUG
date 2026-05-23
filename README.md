@@ -5,6 +5,7 @@
 ## Overview
 
 The goal of this task was to successfully verilate and simulate the `CV32E40P` RISC-V core using Verilator.
+core link: `https://github.com/openhwgroup/cv32e40p.git`
 The process included:
 - Preparing the RTL source list
 - Resolving Verilator compilation issues
@@ -43,7 +44,23 @@ gtkwave wave.fst
 
 So, the core cv32e40p is successfully compiled and simulated on verilator and waveforms can be analyzed in gtkwave
 
-## 2. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
+## 2. Verilating and Simulating riscv-dbg (debug module) using Verilator
+
+Command used for compiling:
+```
+verilator --cc --sv --top-module dm_top -Isrc -I./common_cells/src -I./common_cells/include -I.common_cells/src/cdc_reset_ctrlr_pkg.sv -f filelist.f --Wno-fatal --Wno-PINMISSING --Wno-WIDTHEXPAND
+```
+For simulating:
+Some modification in `src/dm_mem.sv`
+
+Command used:
+```
+verilator --cc --exe --build --sv --top-module dm_top -Isrc -I./common_cells/src -I./common_cells/include -f filelist.f tb.cpp --trace-fst
+```
+![alt text](docs/verilate_sim_debug.png)
+
+
+## 3. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
 This setup demonstrates running a simple RISC-V bare-metal program on QEMU and debugging it using GDB in a step-by-step execution mode. The goal is to observe program execution and register state changes at runtime.
 ## Prerequisites
