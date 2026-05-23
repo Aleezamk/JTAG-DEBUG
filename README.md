@@ -22,6 +22,12 @@ The work started by targeting the top-level module `cv32e40p_top`. A `filelist.f
   
 Several issues were encountered and corrected to make it verilator compatible and filelist is made containing only the required files for verilator-based simulation.
 
+### RTL Modifications
+
+During Verilator compilation of the CV32E40P core, multiple errors were encountered related to mixed assignment styles inside generate blocks and unsupported RTL patterns. These were fixed to ensure successful simulation.
+
+For example, all conflicting signals were unified to **sequential logic (`always_ff`) only**, and `assign` statements were removed or replaced with reset logic in `rtl/cv32e40p_cs_registers.sv`.
+
 The command used to verilate is:
 ```bash
  verilator --cc --exe --build --sv --trace-fst -Wno-fatal --Wno-PINMISSING -DFPU=0 -DZFINX=0 --top-module cv32e40p_top -Irtl/include -Irtl/vendor/pulp_platform_common_cells/src -Irtl/vendor/pulp_platform_common_cells/include -Irtl/vendor/pulp_platform_common_cells/include/common_cells -Ibhv -f filelist.f tb.cpp
