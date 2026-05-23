@@ -1,5 +1,43 @@
 # JTAG-DEBUG
-# 1. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
+
+## 1. Verilating and Simulating CV32E40P Core using Verilator
+
+## Overview
+
+The goal of this task was to successfully verilate and simulate the `CV32E40P` RISC-V core using Verilator.
+The process included:
+- Preparing the RTL source list
+- Resolving Verilator compilation issues
+- Writing a C++ testbench
+- Viewing simulation results in GTKWave
+
+## Work
+
+The work started by targeting the top-level module `cv32e40p_top`. A `filelist.f` approach was used for compilation instead of manually listing RTL files in the command. The filelist contained:
+
+- RTL source files
+- package files
+- vendor/common-cell dependencies
+- behavioral models
+  
+Several issues were encountered and corrected to make it verilator compatible and filelist is made containing only the required files for verilator-based simulation.
+
+The command used to verilate is:
+```bash
+ verilator --cc --exe --build --sv --trace-fst -Wno-fatal --Wno-PINMISSING -DFPU=0 -DZFINX=0 --top-module cv32e40p_top -Irtl/include -Irtl/vendor/pulp_platform_common_cells/src -Irtl/vendor/pulp_platform_common_cells/include -Irtl/vendor/pulp_platform_common_cells/include/common_cells -Ibhv -f filelist.f tb.cpp
+```
+![alt text](docs/verilate_core_comp.png)
+
+Then run this command:
+```bash
+./obj_dir/Vcv32e40p_top
+gtkwave wave.fst
+```
+![alt text](docs/gtkwave_core.png)
+
+So, the core cv32e40p is successfully compiled and simulated on verilator and waveforms can be analyzed in gtkwave
+
+## 2. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
 This setup demonstrates running a simple RISC-V bare-metal program on QEMU and debugging it using GDB in a step-by-step execution mode. The goal is to observe program execution and register state changes at runtime.
 ## Prerequisites
