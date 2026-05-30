@@ -59,8 +59,47 @@ verilator --cc --exe --build --sv --top-module dm_top -Isrc -I./common_cells/src
 ```
 ![alt text](docs/verilate_sim_debug.png)
 
+## 3. debug module inside cv32e40p
 
-## 3. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
+filelist is also in cv32e40p directory.
+
+command for compiling that:
+
+```bash
+verilator --cc --sv --top-module dm_top -I. -Isrc -I./riscv-dbg/src -I./riscv-dbg/tb -I./common_cells/include -I./common_cells/src -I./riscv-dbg/common_cells/include -f filelist.f --Wno-fatal --Wno-PINMISSING --Wno-WIDTHEXPAND
+```
+
+command for simulating:
+
+```bash
+verilator --cc --exe --build --sv \
+  --top-module dm_top \
+  -I. \
+  -Isrc \
+  -I./riscv-dbg/src \
+  -I./riscv-dbg/tb \
+  -I./common_cells/include \
+  -I./common_cells/src \
+  -I./riscv-dbg/common_cells/include \
+  -f filelist.f \
+  tb.cpp \
+  --trace-fst \
+  --Wno-fatal \
+  --Wno-PINMISSING \
+  --Wno-WIDTHEXPAND
+```
+
+then, run
+```bash
+./obj_dir/Vdm_top`
+```
+
+To view waves:
+```bash
+gtkwave eave.fst
+```
+
+## 4. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
 This setup demonstrates running a simple RISC-V bare-metal program on QEMU and debugging it using GDB in a step-by-step execution mode. The goal is to observe program execution and register state changes at runtime.
 ## Prerequisites
