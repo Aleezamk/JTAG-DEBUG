@@ -96,13 +96,26 @@ then, run
 
 To view waves:
 ```bash
-gtkwave eave.fst
+gtkwave wave.fst
 ```
 
 ## 4. All Integrated
 
 - resolved some naming errors
 - added 2 missing files `tc_clk_inverter` and `tc_clk_mux2`
+
+1. For compiling and simulating:
+```bash
+verilator --cc --exe --build --sv --trace-fst -Wno-fatal --Wno-PINMISSING -DFPU=0 -DZFINX=0 --top-module jtag_top -I. -Isrc -I./riscv-dbg/src -I./riscv-dbg/tb -I./common_cells/include -I./common_cells/src -I./riscv-dbg/common_cells/include -Irtl/include -Irtl/vendor/pulp_platform_common_cells/src -Irtl/vendor/pulp_platform_common_cells/include -Irtl/vendor/pulp_platform_common_cells/include/common_cells -Ibhv -f filelist.f tb.cpp
+```
+2. Run
+```bash
+./obj_dir/Vjtag_top
+```
+3. To see the waves:
+```bash
+gtkwave phase1_waves.fst
+```
 
 ## 5. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
