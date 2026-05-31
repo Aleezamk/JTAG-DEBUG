@@ -99,7 +99,12 @@ To view waves:
 gtkwave eave.fst
 ```
 
-## 4. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
+## 4. All Integrated
+
+- resolved some naming errors
+- added 2 missing files `tc_clk_inverter` and `tc_clk_mux2`
+
+## 5. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
 This setup demonstrates running a simple RISC-V bare-metal program on QEMU and debugging it using GDB in a step-by-step execution mode. The goal is to observe program execution and register state changes at runtime.
 ## Prerequisites
