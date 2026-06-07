@@ -204,33 +204,20 @@ make -C obj_dir -f Vjtag_top.mk
 
 This shows that generated model is `SC_CTOR(Vjtag_top);` and `void eval_step();` rakhta hai, isliye ye proper SystemC module hai.
 
-Compilation + Linking:
+**Compilation + Linking:**
 ```
-verilator --sc --sv \
--Wno-fatal \
--Wno-PINMISSING \
--Wno-UNOPTFLAT \
--Wno-CASEINCOMPLETE \
--Wno-SYMRSVDWORD \
--Wno-COMBDLY \
--DFPU=0 \
--DZFINX=0 \
---top-module jtag_top \
--I. \
--Isrc \
--I./riscv-dbg/src \
--I./riscv-dbg/tb \
--I./common_cells/include \
--I./common_cells/src \
--I./riscv-dbg/common_cells/include \
--Irtl/include \
--Irtl/vendor/pulp_platform_common_cells/src \
--Irtl/vendor/pulp_platform_common_cells/include \
--Irtl/vendor/pulp_platform_common_cells/include/common_cells \
--Ibhv \
--f filelist.f
+g++ tb_sc.cpp   -Iobj_dir   -I/usr/local/share/verilator/include   -I/usr/local/share/verilator/include/vltstd   $(pkg-config --cflags systemc)   obj_dir/libVjtag_top.a   /usr/local/share/verilator/include/verilated.cpp   /usr/local/share/verilator/include/verilated_threads.cpp   /usr/local/share/verilator/include/verilated_dpi.cpp   $(pkg-config --libs systemc)   -pthread   -lz   -o sim_sc
+
 ```
 
+Then run:
+```
+./sim_sc
+```
+
+Output:
+
+![alt text](docs/sc_linking.png)
 
 ## 6. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
