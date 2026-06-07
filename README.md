@@ -144,7 +144,64 @@ verilator --sc --sv \
 -Ibhv \
 -f filelist.f
 ```
+- Compile verilator output:
 
+- ```
+  make -C obj_dir -f Vjtag_top.mk
+  ```
+
+  ```
+  (base) aleeza@aleeza-ThinkPad-X1-Carbon-5th:~/JTAG-DEBUG/cv32e40p$ sed -n '40,80p' obj_dir/Vjtag_top.h
+    sc_core::sc_out<bool> &td_o;
+
+    // CELLS
+    // Public to allow access to /* verilator public */ items.
+    // Otherwise the application code can consider these internals.
+
+    // Root instance pointer to allow access to model internals,
+    // including inlined /* verilator public_flat_* */ items.
+    Vjtag_top___024root* const rootp;
+
+    // CONSTRUCTORS
+    SC_CTOR(Vjtag_top);
+    virtual ~Vjtag_top();
+  private:
+    VL_UNCOPYABLE(Vjtag_top);  ///< Copying not allowed
+
+  public:
+    // API METHODS
+  private:
+    void eval() { eval_step(); }
+    void eval_step();
+  public:
+    void final();
+    /// Are there scheduled events to handle?
+    bool eventsPending();
+    /// Returns time at next time slot. Aborts if !eventsPending()
+    uint64_t nextTimeSlot();
+
+    /// DPI Export functions
+    static int read_byte(const svLogicVecVal* byte_addr);
+    static void write_byte(const svLogicVecVal* byte_addr, const svLogicVecVal* val, svLogicVecVal* other);
+
+    // Abstract methods from VerilatedModel
+    const char* hierName() const override final;
+    const char* modelName() const override final;
+    unsigned threads() const override final;
+    /// Prepare for cloning the model at the process level (e.g. fork in Linux)
+    /// Release necessary resources. Called before cloning.
+    void prepareClone() const;
+    /// Re-init after cloning the model at the process level (e.g. fork in Linux)
+    /// Re-allocate necessary resources. Called after cloning.
+(base) aleeza@aleeza-ThinkPad-X1-Carbon-5th:~/JTAG-DEBUG/cv32e40p$ grep -n "eval_step" obj_dir/Vjtag_top.h
+59:    void eval() { eval_step(); }
+60:    void eval_step();
+(base) aleeza@aleeza-ThinkPad-X1-Carbon-5th:~/JTAG-DEBUG/cv32e40p$ grep -n "eval()" obj_dir/Vjtag_top.h
+59:    void eval() { eval_step(); }
+(base) aleeza@aleeza-ThinkPad-X1-Carbo
+```
+
+This shows that generated model is `SC_CTOR(Vjtag_top);` and `void eval_step();` rakhta hai, isliye ye proper SystemC module hai.
 
 ## 6. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
