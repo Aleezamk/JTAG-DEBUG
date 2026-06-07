@@ -117,7 +117,36 @@ verilator --cc --exe --build --sv --trace-fst -Wno-fatal --Wno-PINMISSING -DFPU=
 gtkwave phase1_waves.fst
 ```
 
-## 5. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
+## 5. Command to compile with -sc command
+
+```
+verilator --sc --sv \
+-Wno-fatal \
+-Wno-PINMISSING \
+-Wno-UNOPTFLAT \
+-Wno-CASEINCOMPLETE \
+-Wno-SYMRSVDWORD \
+-Wno-COMBDLY \
+-DFPU=0 \
+-DZFINX=0 \
+--top-module jtag_top \
+-I. \
+-Isrc \
+-I./riscv-dbg/src \
+-I./riscv-dbg/tb \
+-I./common_cells/include \
+-I./common_cells/src \
+-I./riscv-dbg/common_cells/include \
+-Irtl/include \
+-Irtl/vendor/pulp_platform_common_cells/src \
+-Irtl/vendor/pulp_platform_common_cells/include \
+-Irtl/vendor/pulp_platform_common_cells/include/common_cells \
+-Ibhv \
+-f filelist.f
+```
+
+
+## 6. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
 This setup demonstrates running a simple RISC-V bare-metal program on QEMU and debugging it using GDB in a step-by-step execution mode. The goal is to observe program execution and register state changes at runtime.
 ## Prerequisites
