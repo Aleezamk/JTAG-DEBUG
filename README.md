@@ -117,7 +117,7 @@ verilator --cc --exe --build --sv --trace-fst -Wno-fatal --Wno-PINMISSING -DFPU=
 gtkwave phase1_waves.fst
 ```
 
-## 5. Command to compile with -sc command
+## 5. Elaboration + Code generation -sc command
 
 ```
 verilator --sc --sv \
@@ -146,12 +146,12 @@ verilator --sc --sv \
 ```
 - Compile verilator output:
 
-- ```
-  make -C obj_dir -f Vjtag_top.mk
-  ```
+```
+make -C obj_dir -f Vjtag_top.mk
+```
 
-  ```
-  (base) aleeza@aleeza-ThinkPad-X1-Carbon-5th:~/JTAG-DEBUG/cv32e40p$ sed -n '40,80p' obj_dir/Vjtag_top.h
+```
+(base) aleeza@aleeza-ThinkPad-X1-Carbon-5th:~/JTAG-DEBUG/cv32e40p$ sed -n '40,80p' obj_dir/Vjtag_top.h
     sc_core::sc_out<bool> &td_o;
 
     // CELLS
@@ -199,9 +199,38 @@ verilator --sc --sv \
 (base) aleeza@aleeza-ThinkPad-X1-Carbon-5th:~/JTAG-DEBUG/cv32e40p$ grep -n "eval()" obj_dir/Vjtag_top.h
 59:    void eval() { eval_step(); }
 (base) aleeza@aleeza-ThinkPad-X1-Carbo
+
 ```
 
 This shows that generated model is `SC_CTOR(Vjtag_top);` and `void eval_step();` rakhta hai, isliye ye proper SystemC module hai.
+
+Compilation + Linking:
+```
+verilator --sc --sv \
+-Wno-fatal \
+-Wno-PINMISSING \
+-Wno-UNOPTFLAT \
+-Wno-CASEINCOMPLETE \
+-Wno-SYMRSVDWORD \
+-Wno-COMBDLY \
+-DFPU=0 \
+-DZFINX=0 \
+--top-module jtag_top \
+-I. \
+-Isrc \
+-I./riscv-dbg/src \
+-I./riscv-dbg/tb \
+-I./common_cells/include \
+-I./common_cells/src \
+-I./riscv-dbg/common_cells/include \
+-Irtl/include \
+-Irtl/vendor/pulp_platform_common_cells/src \
+-Irtl/vendor/pulp_platform_common_cells/include \
+-Irtl/vendor/pulp_platform_common_cells/include/common_cells \
+-Ibhv \
+-f filelist.f
+```
+
 
 ## 6. QEMU + GDB Debugging Workflow (RISC-V Bare Metal)
 ## Overview
