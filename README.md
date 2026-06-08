@@ -119,6 +119,14 @@ gtkwave phase1_waves.fst
 
 ## 5. Elaboration + Code generation -sc command
 
+first, do this:
+
+
+```
+export SYSTEMC_INCLUDE=/usr/include
+export SYSTEMC_LIBDIR=/usr/lib/x86_64-linux-gnu
+```
+
 ```
 verilator --sc --sv \
 -Wno-fatal \
