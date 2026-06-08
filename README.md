@@ -126,7 +126,12 @@ first, do this:
 export SYSTEMC_INCLUDE=/usr/include
 export SYSTEMC_LIBDIR=/usr/lib/x86_64-linux-gnu
 ```
+verilating only core:
 
+```
+verilator --sc --sv -Wno-fatal -Wno-PINMISSING -Wno-UNOPTFLAT -Wno-CASEINCOMPLETE -Wno-SYMRSVDWORD -Wno-COMBDLY -DFPU=0 -DZFINX=0 --top-module cv32e40p_top -I. -Irtl/include -Irtl/vendor/pulp_platform_common_cells/src -Irtl/vendor/pulp_platform_common_cells/include -Irtl/vendor/pulp_platform_common_cells/include/common_cells -Ibhv -f filelist_core.f
+```
+verilating complete integrated
 ```
 verilator --sc --sv \
 -Wno-fatal \
