@@ -31,7 +31,7 @@ For example, all conflicting signals were unified to **sequential logic (`always
 
 The command used to verilate is:
 ```bash
- verilator --cc --exe --build --sv --trace-fst -Wno-fatal --Wno-PINMISSING -DFPU=0 -DZFINX=0 --top-module cv32e40p_top -Irtl/include -Irtl/vendor/pulp_platform_common_cells/src -Irtl/vendor/pulp_platform_common_cells/include -Irtl/vendor/pulp_platform_common_cells/include/common_cells -Ibhv -f filelist.f tb.cpp
+ verilator --cc --exe --build --sv --trace-fst -Wno-fatal --Wno-PINMISSING -DFPU=0 -DZFINX=0 --top-module cv32e40p_top -Irtl/include -Irtl/vendor/pulp_platform_common_cells/src -Irtl/vendor/pulp_platform_common_cells/include -Irtl/vendor/pulp_platform_common_cells/include/common_cells -Ibhv -f filelist_core.f tb_core.cpp
 ```
 ![alt text](docs/verilate_core_comp.png)
 
@@ -48,7 +48,7 @@ So, the core cv32e40p is successfully compiled and simulated on verilator and wa
 
 Command used for compiling:
 ```
-verilator --cc --sv --top-module dm_top -Isrc -I./common_cells/src -I./common_cells/include -I.common_cells/src/cdc_reset_ctrlr_pkg.sv -f filelist.f --Wno-fatal --Wno-PINMISSING --Wno-WIDTHEXPAND
+verilator --cc --sv --top-module dm_top -Isrc -I./common_cells/src -I./common_cells/include -I.common_cells/src/cdc_reset_ctrlr_pkg.sv -f filelist_debug.f --Wno-fatal --Wno-PINMISSING --Wno-WIDTHEXPAND
 ```
 For simulating:
 Some modification in `src/dm_mem.sv`
