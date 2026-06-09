@@ -171,7 +171,9 @@ head -40 obj_dir/Vjtag_top.h
 ![alt text](docs/proof_sc_model.png)
 
 `#include "systemc"` → systemC library is used 
+
 `sc_core::sc_module` → SystemC base class hai
+
 `#include "systemc"` → SystemC headers use ho rahe hain
 
 - ## Compile Generated model:
