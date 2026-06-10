@@ -139,29 +139,8 @@ verilator --sc --sv -Wno-fatal -Wno-PINMISSING -Wno-UNOPTFLAT -Wno-CASEINCOMPLET
 - ## RTL → SystemC model generation
 
 ```
-verilator --sc --sv \
--Wno-fatal \
--Wno-PINMISSING \
--Wno-UNOPTFLAT \
--Wno-CASEINCOMPLETE \
--Wno-SYMRSVDWORD \
--Wno-COMBDLY \
--DFPU=0 \
--DZFINX=0 \
---top-module jtag_top \
--I. \
--Isrc \
--I./riscv-dbg/src \
--I./riscv-dbg/tb \
--I./common_cells/include \
--I./common_cells/src \
--I./riscv-dbg/common_cells/include \
--Irtl/include \
--Irtl/vendor/pulp_platform_common_cells/src \
--Irtl/vendor/pulp_platform_common_cells/include \
--Irtl/vendor/pulp_platform_common_cells/include/common_cells \
--Ibhv \
--f filelist.f
+verilator --sc --sv -Wno-fatal -Wno-PINMISSING -Wno-UNOPTFLAT -Wno-CASEINCOMPLETE -Wno-SYMRSVDWORD -Wno-COMBDLY -DFPU=0 -DZFINX=0 --top-module jtag_top -I. -Isrc -I./riscv-dbg/src -I./riscv-dbg/tb -I./common_cells/include -I./common_cells/src -I./riscv-dbg/common_cells/include -Irtl/include -Irtl/vendor/pulp_platform_common_cells/src -Irtl/vendor/pulp_platform_common_cells/include -Irtl/vendor/pulp_platform_common_cells/include/common_cells -Ibhv -f filelist.f
+
 ```
 
 After running this command, systemC model is created. That is verified though this
